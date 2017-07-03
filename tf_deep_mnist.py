@@ -79,7 +79,7 @@ cross_entropy = tf.reduce_mean(
 train_step = tf.train.AdamOptimizer(1e-4).minimize(cross_entropy)
 correct_prediction = tf.equal(tf.argmax(y_conv, 1), tf.argmax(y_, 1))
 accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-
+saver = tf.train.Saver()
 with tf.Session() as sess:
   sess.run(tf.global_variables_initializer())
   for i in range(10000):
@@ -92,4 +92,5 @@ with tf.Session() as sess:
 
   print('test accuracy %g' % accuracy.eval(feed_dict={
       x: mnist.test.images, y_: mnist.test.labels, keep_prob: 1.0}))
+  saver.save(sess, 'Dmnist', global_step=9999)
 
